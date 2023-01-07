@@ -125,24 +125,27 @@ class Movielist extends Component {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className='col-12 modalDetailCtn'>
-                            <div className="ModalMovieData">
+                            <div className="ModalMovieData text-left">
                                 <div className='d-flex justify-content-start'>
                                     <h3 className="card-title">{movieStaticData[0].original_title}</h3>
                                     <p>{this.handleDate(movieStaticData[0].release_date)}</p>
                                     <p>{movieStaticData[0].vote_average}</p>
-                                    <button className="moviecard-btn" title="Add to Favorite">
-                                    <i className="bi bi-star-fill"></i></button>
+
                                 </div>
                                 <hr/>
-                                <p className="card-text">{movieStaticData[0].overview}</p>
+                                <div className='d-inline-flex flex-column justify-content-start text-start'>
+                                <p>{movieStaticData[0].overview}</p>
                                 <p>Genre : {
                                     movieStaticData[0].genre_ids.map((genreId)=>{
                                         return (
-                                            <span className="badge bg-secondary">{genreids[genreId]}</span>
+                                            <span key={genreId} className="badge bg-secondary mx-1">{genreids[genreId]}</span>
                                         )
                                     })
                                 }</p>
                                 <p>Language: {this.handleLanugauge(movieStaticData[0].original_language)}</p>
+                                <button className="moviecard-btn" title="Add to Favorite">
+                                Add to Favorite<i className="bi bi-star-fill mx-1"></i></button>
+                                </div>
                             </div>
                             <div className="modalMovieImageCtn">
                                 <img src={`https://image.tmdb.org/t/p/original${movieStaticData[0].backdrop_path}`}className="modalMovieImage rounded-start" alt="..."/>
