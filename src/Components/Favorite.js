@@ -146,20 +146,27 @@ class Favorite extends Component {
                     })
                     return flag;
                 }
-                )
+            )
         }
 
         // Pagination
-        let totalPages = Math.ceil(filteredList.length/this.state.limit);
+        let totalPages = Math.ceil(filteredList.length / this.state.limit);
         let pages = [];
         for(let i=1;i<=totalPages;i++){
             pages.push(i);
         }
+        console.log(pages);
+        console.log(this.state.currentPage);
+        var si = 0;
+        var ei = 0;
 
-        let start = (this.state.currentPage-1)*this.state.limit;
-        let end = start + this.state.limit;
-        filteredList = filteredList.slice(start,end);
-
+        if(this.state.currentPage!== 1)
+        {
+            si = (this.state.currentPage-1)*this.state.limit;
+        }
+        ei = si+Number(this.state.limit);
+        filteredList = filteredList.slice(si,ei);
+    
         return (
             <div className='container-fluid'>
             <div className='row'>

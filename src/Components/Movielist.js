@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { moviesData } from './moviesData';
-import languages from './Languages';
+import MovieDetail from './MovieDetail';
 
-const genreids = {28:'Action',12:'Adventure',16:'Animation',35:'Comedy',80:'Crime',99:'Documentary',18:'Drama',10751:'Family',14:'Fantasy',36:'History',
-27:'Horror',10402:'Music',9648:'Mystery',10749:'Romance',878:'Sci-Fi',10770:'TV',53:'Thriller',10752:'War',37:'Western'};
 
 class Movielist extends Component {
     constructor(){
@@ -12,6 +9,7 @@ class Movielist extends Component {
         this.state={
             hover:'',
             movies:[],
+            currentMovie:'',
             pagginationArray:[1],
             currentPage:1,
             MyFavMoviesID: []
@@ -95,66 +93,25 @@ class Movielist extends Component {
         })
     }
 
-    handleDate = (date) => { 
-        let dateObj = new Date(date);
-        return dateObj.getFullYear();
+    handleModalDetail = (movieobj) => {
+        this.setState({
+            currentMovie:movieobj
+        })
     }
     
-    handleLanugauge = (code) => {
-        let language = languages.filter((lang)=>(lang.code === code));
-        return language[0].name;
-    }
-
     render() {
-        let movieStaticData = moviesData.results;
-
         return (
-        <div className='container-fluid' ref={this.myRef}>
-
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#movieDetailModal">
-        Launch demo modal
-        </button>
+        <div className='container-fluid px-sm-1 px-md-5' ref={this.myRef}>
 
         <div className="modal fade" id="movieDetailModal" tabIndex="-1" aria-labelledby="movieDetailModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div className="modal-content">
-            <div className="modal-body" style={{overflow:"hidden"}}>
-                <div className="card" style={{border:"0px"}}>
-                    <div className="row">
-                        <div className="col-12 col-md-12 text-end mb-3 mb-md-0">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className='col-12 modalDetailCtn'>
-                            <div className="ModalMovieData text-left">
-                                <div className='d-flex justify-content-start'>
-                                    <h3 className="card-title">{movieStaticData[0].original_title}</h3>
-                                    <p>{this.handleDate(movieStaticData[0].release_date)}</p>
-                                    <p>{movieStaticData[0].vote_average}</p>
-
-                                </div>
-                                <hr/>
-                                <div className='d-inline-flex flex-column justify-content-start text-start'>
-                                <p>{movieStaticData[0].overview}</p>
-                                <p>Genre : {
-                                    movieStaticData[0].genre_ids.map((genreId)=>{
-                                        return (
-                                            <span key={genreId} className="badge bg-secondary mx-1">{genreids[genreId]}</span>
-                                        )
-                                    })
-                                }</p>
-                                <p>Language: {this.handleLanugauge(movieStaticData[0].original_language)}</p>
-                                <button className="moviecard-btn" title="Add to Favorite">
-                                Add to Favorite<i className="bi bi-star-fill mx-1"></i></button>
-                                </div>
-                            </div>
-                            <div className="modalMovieImageCtn">
-                                <img src={`https://image.tmdb.org/t/p/original${movieStaticData[0].backdrop_path}`}className="modalMovieImage rounded-start" alt="..."/>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div className="modal-header">
+                <h5 className="modal-title">Movie Detail</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+                <MovieDetail currentMovie={this.state.currentMovie} handleFavClick={this.handleFavClick} MyFavMoviesID={this.state.MyFavMoviesID}/>
             </div>
             <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -163,7 +120,7 @@ class Movielist extends Component {
         </div>
         </div>
 
-            <div className='row' >
+            <div className='row'>
             {
                 this.state.movies === '' ? (
                 <div className="d-flex justify-content-center align-items-center" style={{height:'90vh'}}>
@@ -173,11 +130,11 @@ class Movielist extends Component {
                 ) : (
                 this.state.movies.map((movieObj)=>{
                     return(
-                    <div key={movieObj.id} className="card col-6 col-md-3 col-lg-2 moviecard-ctn">
+                    <div key={movieObj.id} className="card col-6 col-md-3 col-lg-2 moviecard-ctn zoom" >
                         <div className="moviecard-imgctn">
                             <img src={`https://image.tmdb.org/t/p/w200/${movieObj.poster_path}`}  className="card-img-top" alt={`${movieObj.title} and id:${movieObj.id}`}/>
                         </div>
-                        <div className="moviecard-title"><span>{movieObj.original_title}</span></div>
+                        <div className="moviecard-title" data-bs-toggle="modal"             data-bs-target="#movieDetailModal" onClick={()=>this.handleModalDetail(movieObj)}><span>{movieObj.original_title}</span></div>
                         <div className="moviecard-btnctn">
                             <button className="moviecard-btn" title="Add to Favorite" 
                             onClick={()=>this.handleFavClick(movieObj)}>

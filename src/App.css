@@ -146,7 +146,7 @@
 {
 
   color: black;
-  
+  cursor: pointer;
   top:1.5rem;
   left: 1rem;
   width: 90%;
@@ -196,33 +196,68 @@
   background-size: 1rem 1rem;
 }
 
-.modalDetailCtn
-{
-  width:100%;
-  margin: auto;
-}
 
 .modalMovieImageCtn
 {
   position: relative;
-  left:12VW;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.modalMovieImage
+.modalMovieTDctn
 {
-  height: 75VH;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.ModalMovieData
+.modalMovieExtraDatactn
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.ratingCtn
+{
+  width: 45%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 40%);
+  padding: 5px;
+  border-radius: 2px;
+}
+
+.releseYear
 {
   position: absolute;
-  left:5VW;
-  background: rgb(0,0,0);
-  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(11,47,60,1) 32%, rgba(6,48,66,1) 76%, rgba(0,0,0,0) 100%);
-  color: #ffffff;
-  z-index: 1;
-  height: 75VH;
-  width: 40VW;
-  padding: 1rem;
+  top: 0px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 40%);
+  color: white;
+  padding: 10px;
+  border-radius: 2px;
+  font-weight: 700;
 }
 
+@media screen and (max-width: 426px) {
+  .ratingCtn
+  {
+    position: inherit;
+    margin: 0.5rem;
+    width: 93%;
+    font-size: 1rem;
+  }
+}
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
