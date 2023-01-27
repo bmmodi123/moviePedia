@@ -40,10 +40,12 @@ class Navbar extends Component {
                                     <Link className={`nav-link ${this.state.location === "/favorite"?"active":""}`} to="/favorite">My favorite Movies</Link>
                                 </li>
                             </ul>
-                            <form className="d-flex mt-3 mt-lg-0" role="search">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-success" type="submit">Search</button>
-                            </form>
+                            {
+                                // <form className="d-flex mt-3 mt-lg-0" role="search">
+                                //     <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                //     <button className="btn btn-success" type="submit">Search</button>
+                                // </form>
+                            }
                         </div>
                     </div>
 
